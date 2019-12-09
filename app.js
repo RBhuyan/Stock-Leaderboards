@@ -1,11 +1,27 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    mongoose = require('mongoose')
-const port = 4000
+    db = require('./queries'),
+    port = 4000
 
-mongoose.connect("mongodb://localhost:27017/sfe_asset", {useNewUrlParser: true});
+app.use(bodyParser.json())
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+)
 
-app.get('/', (req,res) => res.send('Hello World'))
+app.get('/', (request, response) => {
+  response.json({ info: 'Node.js, Express, and Postgres API' })
+})
 
-app.listen(port, () => console.log('Example app listening on port ${port}!'))
+app.get('/users', db.getUsers)
+app.get('/users/:id', db.getUserById)
+app.post('/users', db.createUser)
+app.put('/users/:id', db.updateUser)
+app.delete('/users/:id', db.deleteUser)
+
+app.listen(port, () => {
+  console.log(`App running on port ${port}.`)
+})
+
