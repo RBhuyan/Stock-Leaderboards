@@ -1,7 +1,7 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
-    db = require('./queries'),
+    db = require('./models/queries'),
     port = 4000
 
 app.use(bodyParser.json())
