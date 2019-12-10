@@ -5,15 +5,20 @@ var express = require('express'),
     methodOverride = require("method-override");
     port = 4000
 
+var homepage = require("./routes/home");
+
 app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 )
+
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
+
+app.use(homepage);
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
