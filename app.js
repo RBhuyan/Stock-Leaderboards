@@ -2,6 +2,7 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     db = require('./models/queries'),
+    methodOverride = require("method-override");
     port = 4000
 
 app.use(bodyParser.json())
@@ -10,6 +11,9 @@ app.use(
     extended: true,
   })
 )
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+app.set("view engine", "ejs");
 
 app.get('/', (request, response) => {
   response.json({ info: 'Node.js, Express, and Postgres API' })
